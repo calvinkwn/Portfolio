@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Mechanical &amp; Aerospace Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --paper: #0e2a4d;
+    --paper-raised: #123259;
+    --ink: #eaf2fb;
+    --ink-soft: #a9c3dd;
+    --blue-mid: #8fc0e8;
+    --blue-deep: #cfe6fa;
+    --blue-soft: #234b78;
+    --line: rgba(255, 255, 255, 0.16);
+    --line-strong: rgba(255, 255, 255, 0.4);
+    --accent: #7ec8f2;
+    --tag-bg: #1b3f68;
+    --grid-line: rgba(255, 255, 255, 0.06);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Grotesk', 'Segoe UI', Arial, sans-serif;
+    line-height: 1.55;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    body { animation: none; opacity: 1; }
+    html { scroll-behavior: auto; }
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+
+  a { color: var(--blue-deep); }
+
+  /* ---------- shared frame with corner ticks ---------- */
+  .sheet {
+    position: relative;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-raised);
+  }
+  .sheet::before, .sheet::after,
+  .sheet .tick-br, .sheet .tick-bl {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+  .sheet::before { top: -1px; left: -1px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+  .sheet::after { top: -1px; right: -1px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+  .sheet .tick-bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+  .sheet .tick-br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  .content-panel {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    padding: 28px;
+  }
+
+  /* ---------- top nav ---------- */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line-strong);
+    backdrop-filter: blur(6px);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 52px;
+    padding-left: 40px;
+  }
+  .nav-mark {
+    color: var(--accent);
+    font-size: 14px;
+  }
+  .nav-links { display: flex; gap: 44px; }
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 4px 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+
+  section { scroll-margin-top: 68px; }
+
+  .label-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+  .label-tag::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  /* ---------- header / title block ---------- */
+  header {
+    padding: 48px 0 0;
+  }
+  .titleblock {
+    margin: 20px 0 0;
+    padding: 36px 36px 28px;
+  }
+  .titleblock-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .titleblock h1 {
+    font-size: clamp(34px, 5.5vw, 58px);
+    margin: 10px 0 6px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+  .photo-slot {
+    flex: none;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  @media (max-width: 560px) {
+    .photo-slot { width: 96px; height: 96px; }
+  }
+
+  .info-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+  }
+  .info-cell {
+    padding: 12px 16px 0;
+    border-left: 1px solid var(--line);
+  }
+  .info-cell:first-child { border-left: none; padding-left: 0; }
+  .info-cell .k {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .info-cell .v { font-size: 14.5px; font-weight: 500; }
+
+  @media (max-width: 640px) {
+    .info-strip { grid-template-columns: repeat(2, 1fr); }
+    .info-cell:nth-child(3) { border-left: none; padding-left: 0; }
+  }
+
+  /* ---------- section scaffolding ---------- */
+  section { padding: 64px 0; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 12px;
+    margin-bottom: 32px;
+  }
+  .section-head h2 {
+    font-size: 26px;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  /* ---------- intro ---------- */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+  }
+  .intro-grid p { font-size: 16.5px; color: var(--ink-soft); }
+  .intro-grid p strong { color: var(--ink); }
+
+  .interest-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .interest-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 14.5px;
+  }
+  .interest-list li:first-child { padding-top: 0; }
+  .interest-list svg { flex: none; }
+
+  @media (max-width: 720px) {
+    .intro-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- projects ---------- */
+  .project-grid {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    max-width: 1440px;
+    padding: 0 40px;
+  }
+  @media (max-width: 900px) {
+    .project-grid { flex-direction: column; padding: 0 20px; }
+  }
+
+  .project-card {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .project-card:hover,
+  .project-card:focus-visible {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--accent);
+    z-index: 2;
+    outline: none;
+  }
+  @media (max-width: 900px) {
+    .project-card, .project-card:hover { flex: 1 1 100%; transform: none; }
+  }
+
+  .project-card .sheet-no {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .project-card h3 { font-size: 17.5px; margin: 0 0 4px; font-weight: 600; }
+  .project-card .proj-tag { font-size: 12px; color: var(--blue-mid); margin: 0 0 14px; font-weight: 500; }
+
+  .view-hint {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+
+  .project-card .spec-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+    gap: 12px;
+  }
+  .project-card .spec-row .result { color: var(--accent); font-weight: 500; text-align: right; }
+
+  /* ---------- project modal ---------- */
+  .project-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 12, 24, 0.78);
+    backdrop-filter: blur(3px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+  .project-modal.active { display: flex; }
+
+  .modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 44px;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 44px;
+  }
+  @media (max-width: 760px) {
+    .modal-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  .modal-text h3 { font-size: 26px; margin: 0 0 6px; font-weight: 700; }
+  .modal-text .proj-tag { font-size: 13px; color: var(--blue-mid); margin: 0 0 20px; font-weight: 500; }
+  .modal-text .desc-long { font-size: 15px; color: var(--ink-soft); line-height: 1.7; margin: 0 0 24px; }
+
+  .modal-images {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .modal-images .photo-placeholder {
+    flex: none;
+    width: 100%;
+    height: 220px;
+    border: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    overflow: hidden;
+  }
+  .modal-images .photo-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- hobbies ---------- */
+  .hobby-tabs {
+    display: flex;
+    gap: 44px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .hobby-tab {
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 4px 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .hobby-tab:hover { color: var(--ink); }
+  .hobby-tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* one-line blurb at the top of each hobby tab */
+  .hobby-intro {
+    margin: 0 0 22px;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    max-width: 60ch;
+  }
+
+  .hobby-panel { display: none; }
+  .hobby-panel.active { display: block; }
+
+  .hobby-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 900px) {
+    .hobby-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .hobby-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .hobby-item { display: flex; flex-direction: column; }
+  .hobby-cover {
+    aspect-ratio: 2 / 3;
+    border: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .hobby-cover.square { aspect-ratio: 1 / 1; }
+  /* the cover is the positioning context so a real image can sit on top of
+     the ADD COVER placeholder text rather than pushing it around */
+  .hobby-cover { position: relative; }
+  .hobby-cover img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* solid frame once a real cover has loaded; dashed while it's still empty */
+  .hobby-cover:has(img) { border-style: solid; }
+  .hobby-item h4 { font-size: 13px; margin: 0 0 3px; font-weight: 600; line-height: 1.3; }
+  .hobby-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .hobby-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 1px;
+    width: fit-content;
+  }
+  .hobby-link:hover { border-bottom-color: var(--accent); }
+
+  /* ---------- footer ---------- */
+  footer {
+    padding: 48px 0 64px;
+    border-top: 1px solid var(--line-strong);
+    margin-top: 32px;
+  }
+  footer .foot-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  footer .contact a {
+    display: inline-block;
+    font-size: 15px;
+    margin-right: 20px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 2px;
+  }
+  footer .rev {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+.resume-sheet { padding: 0; background: #ffffff; }
+.resume-sheet .tick-bl, .resume-sheet .tick-br { z-index: 2; }
+.resume-link { display: block; position: relative; line-height: 0; }
+.resume-img { display: block; width: 100%; height: auto; }
+.resume-link::after {
+  content: 'OPEN FULL SIZE \2197';
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: var(--paper);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.resume-link:hover::after { opacity: 1; }
+
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="#about">About Me</a>
+      <a href="#projects">Projects</a>
+      <a href="#awards">Hobbies</a>
+      <a href="#resume">Resume</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header>
+    <div class="titleblock sheet">
+      <span class="tick-bl"></span><span class="tick-br"></span>
+      <div class="titleblock-top">
+        <h1>Hello! I'm<br>Calvin Kwon</h1>
+        <div class="photo-slot">
+          <img src="data:image/jpeg;base64,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" alt="Calvin Kwon" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <div class="info-cell">
+          <span class="k">EDUCATION</span>
+          <span class="v">Cornell University</span>
+        </div>
+        <div class="info-cell">
+          <span class="k">GRADUATION</span>
+          <span class="v">May 2030</span>
+        </div>
+        <div class="info-cell">
+          <span class="k">FOCUS</span>
+          <span class="v">Mech. Eng. / Aerospace</span>
+        </div>
+        <div class="info-cell">
+          <span class="k">LOCATION</span>
+          <span class="v">Ithaca, NY</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-head">
+      <h2>About Me</h2>
+    </div>
+    <div class="intro-grid content-panel sheet">
+      <span class="tick-bl"></span><span class="tick-br"></span>
+      <p>
+        I'm a mechanical engineering student who likes building things that have to actually work — under load, under pressure, or in zero gravity.
+        <br><br>
+        I'm certified in Autodesk Inventor and work regularly in <strong>Solidworks</strong> and <strong>MATLAB</strong>, with hands-on shop experience in 3D printing (Bambu) and laser cutting/engraving. Outside the lab, I've spent several years teaching math, engineering fundamentals, and cello. Feel free to scroll down to learn more about my projects and my hobbies!
+      </p>
+      <ul class="interest-list">
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2 5-2 3-2-3 2-5z"/><path d="M9 10l-4 9 7-3 7 3-4-9"/></svg>
+          Aerospace payload &amp; systems design
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          Mechanical design &amp; CAD prototyping
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M2 17c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/></svg>
+          Underwater robotics &amp; fluid systems
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Teaching &amp; making technical ideas clear
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <h2>Projects [Click on each one!]</h2>
+    </div>
+    <div class="project-grid">
+
+      <div class="project-card sheet" tabindex="0" onclick="openProject('modal-hunch')" onkeydown="if(event.key==='Enter')openProject('modal-hunch')">
+        <span class="tick-bl"></span><span class="tick-br"></span>
+        <div class="sheet-no"><span>SHEET 01/04</span><span>NASA HUNCH</span></div>
+        <h3>Micro-gravity Nanolab</h3>
+        <p class="proj-tag">2U payload — fluid dynamics research</p>
+        <span class="view-hint">VIEW PROJECT →</span>
+        <div class="spec-row"><span>ROLE — LEAD ENGINEER</span><span class="result">NATIONAL FINALIST</span></div>
+      </div>
+
+      <div class="project-card sheet" tabindex="0" onclick="openProject('modal-techrise')" onkeydown="if(event.key==='Enter')openProject('modal-techrise')">
+        <span class="tick-bl"></span><span class="tick-br"></span>
+        <div class="sheet-no"><span>SHEET 02/04</span><span>NASA TECHRISE</span></div>
+        <h3>High-Altitude Microplastics Collector</h3>
+        <p class="proj-tag">National student challenge</p>
+        <span class="view-hint">VIEW PROJECT →</span>
+        <div class="spec-row"><span>TEAMS SELECTED — 60/720+</span><span class="result">NATIONAL FINALIST</span></div>
+      </div>
+
+      <div class="project-card sheet" tabindex="0" onclick="openProject('modal-seaperch')" onkeydown="if(event.key==='Enter')openProject('modal-seaperch')">
+        <span class="tick-bl"></span><span class="tick-br"></span>
+        <div class="sheet-no"><span>SHEET 03/04</span><span>SEAPERCH</span></div>
+        <h3>Underwater ROV</h3>
+        <p class="proj-tag">U.S. Navy SeaPerch — NY/NJ Regional</p>
+        <span class="view-hint">VIEW PROJECT →</span>
+        <div class="spec-row"><span>REGIONAL — NY/NJ</span><span class="result">3RD PLACE</span></div>
+      </div>
+
+      <div class="project-card sheet" tabindex="0" onclick="openProject('modal-rcplane')" onkeydown="if(event.key==='Enter')openProject('modal-rcplane')">
+        <span class="tick-bl"></span><span class="tick-br"></span>
+        <div class="sheet-no"><span>SHEET 04/04</span><span>PERSONAL PROJECT</span></div>
+        <h3>RC Plane</h3>
+        <p class="proj-tag">Custom built — funded by Bergen Makerspace</p>
+        <span class="view-hint">VIEW PROJECT →</span>
+        <div class="spec-row"><span>NJ, BERGEN COUNTY</span><span class="result"></span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="project-modal" id="modal-hunch" onclick="if(event.target===this)closeModal()">
+    <div class="modal-inner sheet">
+      <span class="tick-bl"></span><span class="tick-br"></span>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-text">
+          <div class="sheet-no"><span>SHEET 01/04</span><span>NASA HUNCH</span></div>
+          <h3>Micro-gravity Nanolab</h3>
+          <p class="proj-tag">2U payload — fluid dynamics research</p>
+          <p class="desc-long">Led the team engineering a 2U payload studying zero-gravity fluid dynamics for agricultural applications. Owned the mechanical design of the housing and fluid-handling assembly, iterating through several CAD revisions in Inventor to fit sensors, pumps, and structural supports inside the strict 2U envelope, then validated sealing and fluid behavior through ground testing.</p>
+          <div class="spec-row"><span>ROLE — LEAD ENGINEER</span><span class="result">NATIONAL FINALIST</span></div>
+        </div>
+        <div class="modal-images">
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal" id="modal-techrise" onclick="if(event.target===this)closeModal()">
+    <div class="modal-inner sheet">
+      <span class="tick-bl"></span><span class="tick-br"></span>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-text">
+          <div class="sheet-no"><span>SHEET 02/04</span><span>NASA TECHRISE</span></div>
+          <h3>High-Altitude Microplastics Collector</h3>
+          <p class="proj-tag">National student challenge</p>
+          <p class="desc-long">Designed a high-altitude balloon experiment to collect atmospheric microplastics, selected as 1 of 60 teams nationwide out of 720+ applicants. Developed the sampling mechanism and enclosure, working through the weight, power, and thermal constraints typical of near-space payloads, and coordinated on data logging and recovery procedures.</p>
+          <div class="spec-row"><span>TEAMS SELECTED — 60/720+</span><span class="result">NATIONAL FINALIST</span></div>
+        </div>
+        <div class="modal-images">
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal" id="modal-seaperch" onclick="if(event.target===this)closeModal()">
+    <div class="modal-inner sheet">
+      <span class="tick-bl"></span><span class="tick-br"></span>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-text">
+          <div class="sheet-no"><span>SHEET 03/04</span><span>SEAPERCH</span></div>
+          <h3>Underwater ROV</h3>
+          <p class="proj-tag">U.S. Navy SeaPerch — NY/NJ Regional</p>
+          <p class="desc-long">Built and piloted a remotely operated underwater vehicle for the regional SeaPerch competition. Designed the frame and buoyancy layout to balance stability with maneuverability, handled the control-side wiring and waterproofing for the tether and thrusters, then piloted the finished ROV through the competition's timed obstacle and task course.</p>
+          <div class="spec-row"><span>REGIONAL — NY/NJ</span><span class="result">3RD PLACE</span></div>
+        </div>
+        <div class="modal-images">
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-modal" id="modal-rcplane" onclick="if(event.target===this)closeModal()">
+    <div class="modal-inner sheet">
+      <span class="tick-bl"></span><span class="tick-br"></span>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-text">
+          <div class="sheet-no"><span>SHEET 04/04</span><span>PERSONAL PROJECT</span></div>
+          <h3>RC Plane</h3>
+          <p class="proj-tag">Custom built — funded by Bergen Makerspace</p>
+          <p class="desc-long">Designed and built a custom radio-controlled aircraft from raw materials, funded through Bergen Makerspace. Worked through airframe design, weight distribution, and control-surface tuning to get a stable, flyable build — a self-directed project outside of any team or competition.</p>
+          <div class="spec-row"><span>NJ, BERGEN COUNTY</span><span class="result"></span></div>
+        </div>
+        <div class="modal-images">
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+          <div class="photo-placeholder"><span>ADD PHOTO</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="awards">
+
+    <div class="hobby-tabs">
+      <button class="hobby-tab active" onclick="showHobby('movies', this)">Movies</button>
+      <button class="hobby-tab" onclick="showHobby('tvshows', this)">TV Shows</button>
+      <button class="hobby-tab" onclick="showHobby('cello', this)">My Cello Videos!</button>
+    </div>
+
+    <div class="hobby-panel active" id="hobby-movies">
+      <p class="hobby-intro">Some of my favorite movies at the moment.</p>
+      <div class="hobby-grid">
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="manchester.jpg" alt="Movie Title 1 cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Manchester by the Sea</h4>
+          <span class="hobby-meta">2016</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="tenet.jpg" alt="Movie Title 2 cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Tenet</h4>
+          <span class="hobby-meta">2020</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="blade.jpg" alt="Movie Title 3 cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Blade Runner 2049</h4>
+          <span class="hobby-meta">2017</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="mono.jpg" alt="Movie Title 4 cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Princess Mononoke</h4>
+          <span class="hobby-meta">1997</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="arrival.jpg" alt="Movie Title 5 cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Arrival</h4>
+          <span class="hobby-meta">2016</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hobby-panel" id="hobby-tvshows">
+      <p class="hobby-intro">Shows I've been watching and would recommend.</p>
+      <div class="hobby-grid">
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="truedetective.jpg" alt="True Detective cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>True Detective</h4>
+          <span class="hobby-meta">2014</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="chernobyl.jpg" alt="Chernobyl cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Chernobyl</h4>
+          <span class="hobby-meta">2019</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="thepenguin.jpg" alt="The Penguin cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>The Penguin</h4>
+          <span class="hobby-meta">2024</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="jujutsu.jpg" alt="Jujutsu Kaisen cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Jujutsu Kaisen</h4>
+          <span class="hobby-meta">2020</span>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover"><img src="dark.jpg" alt="Dark cover" loading="lazy" onerror="this.remove()"><span>ADD<br>COVER</span></div>
+          <h4>Dark</h4>
+          <span class="hobby-meta">2017</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hobby-panel" id="hobby-cello">
+      <p class="hobby-intro">Recordings from recitals and performances I've played in.</p>
+      <div class="hobby-grid">
+        <div class="hobby-item">
+          <div class="hobby-cover square"><img src="prelude4.jpg" alt="Cello cover" loading="lazy" onerror="this.remove()"><span>ADD<br>IMAGE</span></div>
+          <h4>Suite No.4 - Prelude / J.S. Bach</h4>
+          <a href="https://youtu.be/RhHoSi99vWQ?si=1IAVoFuwmmkhuNBZ" class="hobby-link">Watch video →</a>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover square"><img src="crumb.jpg" alt="Cello cover" loading="lazy" onerror="this.remove()"><span>ADD<br>IMAGE</span></div>
+          <h4>Cello Sonata 1 / G. Crumb</h4>
+          <a href="https://youtu.be/nVJK2k7Ys4M?si=M5do825Y-9w1QNqM" class="hobby-link">Watch video →</a>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover square"><img src="prelude3.jpg" alt="Cello cover" loading="lazy" onerror="this.remove()"><span>ADD<br>IMAGE</span></div>
+          <h4>Suite No.3 - Prelude / J.S. Bach</h4>
+          <a href="https://youtu.be/LqbUFm_W02E?si=gozdMOVZn3bjLAHb" class="hobby-link">Watch video →</a>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover square"><img src="trio.jpg" alt="Cello cover" loading="lazy" onerror="this.remove()"><span>ADD<br>IMAGE</span></div>
+          <h4>Clarinet Trio / C. Furling</h4>
+          <a href="https://youtu.be/K-EpZzUPvQQ?si=Du_5g4LNuIxBTnHO" class="hobby-link">Watch video →</a>
+        </div>
+        <div class="hobby-item">
+          <div class="hobby-cover square"><img src="lalo3.jpg" alt="Cello cover" loading="lazy" onerror="this.remove()"><span>ADD<br>IMAGE</span></div>
+          <h4>Cello Concerto no.1 / Lalo</h4>
+          <a href="https://youtu.be/RXB4mVhVjew?si=iWqegPXesi--dV3g" class="hobby-link">Watch video →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section id="resume">
+  <div class="section-head">
+    <h2>Resume</h2>
+  </div>
+  <div class="content-panel sheet resume-sheet">
+    <span class="tick-bl"></span><span class="tick-br"></span>
+    <a class="resume-link" href="resume.jpg" target="_blank" rel="noopener">
+      <img src="resume.jpg" alt="Calvin Kwon resume" class="resume-img">
+    </a>
+  </div>
+</section>
+
+  <footer>
+    <div class="foot-grid">
+      <div class="contact">
+        <a href="mailto:cqk2@cornell.edu">cqk2@cornell.edu</a>
+        <a href="https://www.linkedin.com/in/calvin-kwon-84bb55310/">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function showHobby(id, btn) {
+    document.querySelectorAll('.hobby-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('hobby-' + id).classList.add('active');
+    document.querySelectorAll('.hobby-tab').forEach(function(t) { t.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  function openProject(id) {
+    document.querySelectorAll('.project-modal').forEach(function(m) { m.classList.remove('active'); });
+    var modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  function closeModal() {
+    document.querySelectorAll('.project-modal').forEach(function(m) { m.classList.remove('active'); });
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
+</body>
+</html>
