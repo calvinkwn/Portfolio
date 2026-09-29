@@ -912,13 +912,25 @@
     <div class="modal-inner sheet">
       <span class="tick-bl"></span><span class="tick-br"></span>
       <button class="modal-close" onclick="closeModal()">CLOSE PROJECT TAB</button>
-      <div class="modal-grid">
+      <div class="modal-grid stacked">
         <div class="modal-text">
           <div class="sheet-no"><span>SHEET 03/04</span><span>SEAPERCH</span></div>
           <h3>Underwater ROV</h3>
           <div class="spec-row"><span>REGIONAL — NY/NJ</span><span class="result">3RD PLACE</span></div>
           <p class="proj-tag">U.S. Navy SeaPerch — NY/NJ Regional</p>
-          <p class="desc-long">Built and piloted a remotely operated underwater vehicle for the regional SeaPerch competition. Designed the frame and buoyancy layout to balance stability with maneuverability, handled the control-side wiring and waterproofing for the tether and thrusters, then piloted the finished ROV through the competition's timed obstacle and task course.</p>
+          <h4 class="desc-head">Overview</h4>
+          <p class="desc-long">A remote-controlled aircraft built from scratch, designed and flown over roughly three months. It runs on an 11.1V LiPo battery driving a brushless motor, with four servos for control &mdash; two in the wings for the ailerons and two in the tail for the elevator &mdash; fed through a receiver and flight controller. Nothing about it came from a kit: every dimension, ratio, and part placement was something I had to decide and then find out whether I had decided correctly.</p>
+          <h4 class="desc-head">Sizing &amp; Analysis</h4>
+          <p class="desc-long">The first month went entirely into proportions &mdash; wing area against fuselage length, the size and placement of the vertical and horizontal stabilizers, and where each sat along the body. I had no access to professional simulation software, so I worked from published RC aircraft design papers and an online wing cube loading calculator: weight divided by wing area raised to the 1.5 power, which unlike plain wing loading is comparable across aircraft of different sizes. The resulting number falls into bands &mdash; roughly 4 to 7 for park flyers, 7 to 10 for trainers and sport models, higher for aerobatic and scale aircraft &mdash; which let me target the handling I actually wanted before cutting anything.</p>
+          <p class="desc-long">The calculator narrowed the range but it could not tell me what would fly. Most of the real answers came out of the month of testing that followed.</p>
+          <h4 class="desc-head">Build &amp; Iteration</h4>
+          <p class="desc-long">I built in the foam board used for most scratch-built RC aircraft, and spent the second month gliding airframes to see which ratios held up.</p>
+          <p class="desc-long">The fuselage went through three versions. The first was strictly rectangular; later ones kept the sharp edges but were trimmed and tapered, with enough internal volume for the battery, wiring, and motor mount.</p>
+          <p class="desc-long">The wing was the hard part. I started with 10 degrees of dihedral, which turned out to be far too much &mdash; the aircraft was over-corrected and sluggish in roll. Rebuilding it flat swung it the other way and left it slightly unstable. I added a KFm airfoil and tried both KFm-1 and KFm-2; KFm-2 won, partly on performance and partly because it was the simplest to build repeatably without introducing inconsistencies along the step. Wing attachment went through rubber bands, adhesive, and both together before I settled on adhesive alone as the simplest thing that held.</p>
+          <p class="desc-long">By the sixth iteration it glided cleanly, so I moved to powered flight. The aileron servos went into the wings toward the leading edge, where the KFm-2 step let them sit flush without interrupting the airfoil &mdash; one of the unplanned advantages of that profile. The other two went into the tail for the elevator. With a large wing, I prioritised roll authority over pitch. Then I calibrated the controller and took it out.</p>
+          <h4 class="desc-head">Outcome</h4>
+          <p class="desc-long">It flew. I ran two test flights, added landing gear and made repairs between them, then flew it a third time and put it into a tree.</p>
+          <p class="desc-long">That ended the airframe &mdash; flying it again would mean buying new parts. But the aircraft worked, which was the point. What I took from it was less about aerodynamics than about running something end to end on my own: sizing it, being wrong, rebuilding it six times, and applying coursework to a problem nobody had set up for me in advance.</p>
         </div>
         <div class="modal-images">
           <div class="photo-placeholder"><span>ADD PHOTO</span></div>
